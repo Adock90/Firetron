@@ -1,4 +1,5 @@
 /*This is the kernel stub of Firetron to check everything is working
+This was taken from EmbeddedOS's uefi bootloader to test https://github.com/EmbeddedOS
 	Creator: Adam Croft @adock90
 	SPDX-License-Identifier: GPL-2.0
 */
