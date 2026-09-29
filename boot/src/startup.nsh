@@ -1,6 +1,5 @@
 @echo -off
 
-echo "[Booting firetron]"
 
 if exist .\EFI\BOOT\fireboot.efi then
 	.\EFI\BOOT\fireboot.efi

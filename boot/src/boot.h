@@ -13,12 +13,15 @@
 #include "elf.h"
 #include "graphics.h"
 
+#define KERNEL_FILE_PATH L"firestarter.elf"
+
 //kernel parameters
 typedef struct
 {
 	memory_map mm;
 	EFI_RUNTIME_SERVICES* rt;
 	EFI_GRAPHICS_OUTPUT_PROTOCOL_MODE gop;
+	int debug_mode;
 } krnl_params;
 
 //The 'krnl_entry' function is used to jump and pass parameters used by the kernel

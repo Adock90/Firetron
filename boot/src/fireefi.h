@@ -12,4 +12,11 @@ which includes gnu-efi headers so we can access them globally.
 
 #define MAX_PATH 4096
 
+extern EFI_HANDLE loaded_img;
+
+
+void unicode_str_to_ascii_str(const CHAR16* src, CHAR8* dst);
+
+void ascii_str_to_unicode_str(const CHAR8* src, CHAR16* dst);
+
 #endif

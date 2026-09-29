@@ -6,7 +6,16 @@
 #define ERROR_H
 
 #include "fireefi.h"
+#include "files.h"
+
+#define ERROR_LOG_FILE_PATH L"FBEL.log"
 
 void out_error(const CHAR16* msg, ...);
+
+void out_log(const CHAR16* msg, ...);
+
+EFI_STATUS refresh_error_log_file();
+
+void reboot_system_for_error();
 
 #endif

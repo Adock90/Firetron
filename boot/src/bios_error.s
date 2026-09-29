@@ -19,7 +19,7 @@ fireboot_print_str:
 .fireboot_print_char:
 	lodsb
 	
-	cmp AL, 0x00
+	cmp al, 0x00
 	je .fireboot_print_end_string
 	
 	int 0x10
@@ -29,6 +29,7 @@ fireboot_print_str:
 	popa
 	ret
 
-bios_error_msg db "[FATAL ERR] Your Device has booted Firetron in BIOS mode which is unsupported."
+bios_error_msg db "Your Device has booted Firetron in BIOS mode which is unsupported.", 0xA
+
 times 510-($-$$) db 0x00
 dw 0xaa55

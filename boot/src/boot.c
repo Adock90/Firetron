@@ -5,10 +5,21 @@
 
 #include "boot.h"
 
+
 EFI_STATUS load_krnl(const CHAR16* filename, EFI_HANDLE img, void** entry)
 {
 	EFI_FILE_HANDLE file_system_volume = get_volume(img);
+	if (file_system_volume == NULL)
+	{
+		return EFI_LOAD_ERROR;
+	}
+
 	EFI_FILE_HANDLE file_handle = open_file(filename, file_system_volume);
+	if (file_handle == NULL)
+	{
+		return EFI_LOAD_ERROR;
+	}
+
 	UINT64 file_size = get_file_size(file_handle);
 	if (file_size < 4096)
 	{
@@ -64,17 +75,28 @@ EFI_STATUS
 EFIAPI
 efi_main(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE* SystemTable)
 {
+	loaded_img = ImageHandle;
+
 	InitializeLib(ImageHandle, SystemTable); //Has to be done in order to call UEFI functions
-	
-	const CHAR16* krnl_file_path = L"firestarter.elf"; //kernel init filename. (firestarter.elf)
+
+	EFI_STATUS status = refresh_error_log_file();
+	if (EFI_ERROR(status))
+	{
+		out_error(L"Failed to refresh error log file: %s. EFI_STATUS: %d", ERROR_LOG_FILE_PATH, status);
+		return status;
+	}
+
+	const CHAR16* krnl_file_path = KERNEL_FILE_PATH; //kernel init filename. (firestarter.elf)
 	krnl_params kernel_parameters = {0};
 	void* entry = NULL;
 	
+	out_log(L"Booting firetron: %s\n", krnl_file_path);
 
-	EFI_STATUS status = load_krnl(krnl_file_path, ImageHandle, &entry);
+	status = load_krnl(krnl_file_path, ImageHandle, &entry);
 	if (EFI_ERROR(status))
 	{
 		out_error(L"Failed to load ELF Kernel. Filename: %s. EFI_STATUS: %d", krnl_file_path, status);
+		reboot_system_for_error();
 		return status;
 	}
 	
@@ -84,8 +106,7 @@ efi_main(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE* SystemTable)
 	{
 		out_error(L"Failed to get graphics output protocol");
 		return status;
-	}
-	
+	}	
 
 	status = get_memory_map(&kernel_parameters.mm);
 	if (EFI_ERROR(status))

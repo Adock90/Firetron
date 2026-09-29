@@ -17,6 +17,14 @@ UINT64 get_file_size(EFI_FILE_HANDLE file_handle);
 
 UINT8* read_file(EFI_FILE_HANDLE file_handle);
 
-void close_file(EFI_FILE_HANDLE file_handle);
+EFI_STATUS write_file(EFI_FILE_HANDLE file_handle, const CHAR16* buffer);
+
+EFI_STATUS append_file(EFI_FILE_HANDLE file_handle, const CHAR16* string);
+
+EFI_FILE_HANDLE create_file(const CHAR16* filename, EFI_FILE_HANDLE volume);
+
+EFI_STATUS delete_file(EFI_FILE_HANDLE file_handle);
+
+EFI_STATUS close_file(EFI_FILE_HANDLE file_handle);
 
 #endif
