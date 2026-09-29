@@ -36,16 +36,24 @@ Firetron's kernel is in very early development so it doesn't load yet is being d
 
 Git Clone:
 
-<code> git clone https://github.com/Adock90/Firetron-boot.git</code>
+```
+git clone https://github.com/Adock90/Firetron-boot.git
+```
 
 cd into the boot dir:
 
-<code> cd boot</code>
+```
+cd boot
+```
 
 Run:
 
-<code> chmod +x ./build.sh </code>
+```
+chmod +x ./build.sh
+```
 
-<code> ./build.sh </code>
+```
+./build.sh
+```
 
 This should run in qemu.
